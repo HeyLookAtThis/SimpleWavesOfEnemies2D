@@ -9,5 +9,5 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] private Sprite _icon;
     [SerializeField] private bool _isBuy = false;
 
-    public abstract void Attack();
+    public abstract void Attack(Vector2 position, float rotationY);
 }

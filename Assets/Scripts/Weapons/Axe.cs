@@ -1,26 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UIElements;
 
 public class Axe : Weapon
 {
-    [SerializeField] private Player _player;
+    [SerializeField] private DestructionZone _destruction;
 
-    [SerializeField] private ZoneOfDestructionsFromAxe _destructions;
+    private DestructionZone _currentDestruction = null;
 
-    public override void Attack()
+    public override void Attack(Vector2 position, float rotationY)
     {
-        InstantiateDestruction();
+        if(_currentDestruction == null)
+            InstantiateDestruction(position, rotationY);
     }
 
-    private void InstantiateDestruction()
+    private void InstantiateDestruction(Vector2 position, float rorationY)
     {
-        float xAxeOffset = -0.9f;
+        float xAxeOffset;
+
+        if (rorationY == 0)
+            xAxeOffset = -0.9f;
+        else
+            xAxeOffset = 0.9f;
+
         float yAxeOffset = 0.5f;
+        Vector2 correctPosition = new Vector2(position.x + xAxeOffset, position.y + yAxeOffset);
 
-        Vector2 position = new Vector2(xAxeOffset + _player.transform.position.x, yAxeOffset + _player.transform.position.x);
-
-        Instantiate(_destructions, position, Quaternion.identity);
+        _currentDestruction = Instantiate(_destruction, correctPosition, Quaternion.identity);
     }
 }

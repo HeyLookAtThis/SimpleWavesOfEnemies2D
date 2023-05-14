@@ -116,5 +116,5 @@ MonoBehaviour:
   _price: 0
   _icon: {fileID: 21300000, guid: 758bf352434970a4db91f175746962fa, type: 3}
   _isBuy: 1
-  _player: {fileID: -1295248506912803441, guid: b395acb59417bfa4c9b2020d8fff05b4, type: 3}
-  _destructions: {fileID: 6266090834263547854, guid: 8318814a656ef2947abccc17808244ee, type: 3}
+  _destruction: {fileID: 6266090834263547854, guid: 8318814a656ef2947abccc17808244ee, type: 3}
+  _rotation: {fileID: 751264979813207494, guid: b395acb59417bfa4c9b2020d8fff05b4, type: 3}

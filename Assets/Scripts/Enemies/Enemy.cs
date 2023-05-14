@@ -1,22 +1,65 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private int _health;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (TryGetComponent<ZoneOfDestructionsFromAxe>(out ZoneOfDestructionsFromAxe destruction))
-            TakeDamage(destruction.GetDamage());
+    private UnityAction _onTakenDamage;
+    private UnityAction _onDied;
 
-        else if (TryGetComponent<Bullet>(out Bullet bullet))
-            TakeDamage(bullet.GetDamage());
+    private Coroutine _destroyer;
+
+    public event UnityAction TakenDamage
+    {
+        add => _onTakenDamage += value;
+        remove => _onTakenDamage -= value;
     }
 
-    private void TakeDamage(int damage)
+    public event UnityAction Died
+    {
+        add => _onDied += value;
+        remove => _onDied -= value;
+    }
+
+    public void TakeDamage(int damage)
     {
         _health -= damage;
+        _onTakenDamage.Invoke();
+
+        if (_health <= 0)
+        {
+            _onDied.Invoke();
+            BeginDestroy();
+        }
+    }
+
+    private void BeginDestroy()
+    {
+        if (_destroyer != null)
+            StopCoroutine(_destroyer);
+
+        _destroyer = StartCoroutine(Destroyer());
+    }
+
+    private IEnumerator Destroyer()
+    {
+        float second = 1.0f;
+        var waitTime = new WaitForSeconds(second);
+        bool isSkeppedTime = false;
+
+        while (isSkeppedTime == false)
+        {
+            isSkeppedTime = true;
+            yield return waitTime;
+        }
+
+        if(isSkeppedTime)
+        {
+            Destroy(gameObject);
+            yield break;
+        }
     }
 }

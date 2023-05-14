@@ -5,8 +5,6 @@ using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
-    private const string Fire = "Fire1";
-
     [SerializeField] private List<Weapon> _weapons;
 
     private UnityAction _onAttacked;
@@ -15,7 +13,7 @@ public class Player : MonoBehaviour
     private float _health = 100.0f;
     private float _currentHealth;
 
-    public float Hit { get; private set; }
+    public bool IsHit { get; private set; }
 
     private void Start()
     {
@@ -34,13 +32,16 @@ public class Player : MonoBehaviour
         remove => _onAttacked -= value;
     }
 
+    private bool GetHit()
+    {
+        return Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.LeftControl) ? true : false;
+    }
+
     private void TryAttack()
     {
-        Hit = Input.GetAxis(Fire);
-
-        if (Hit != 0)
+        if (GetHit())
         {
-            _currentWeapon.Attack();
+            _currentWeapon.Attack(transform.position, transform.rotation.y);
             _onAttacked.Invoke();
         }
     }

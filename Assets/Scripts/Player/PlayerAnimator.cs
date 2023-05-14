@@ -26,7 +26,6 @@ public class PlayerAnimator : MonoBehaviour
         SetSpeed();
     }
 
-
     private void OnDisable()
     {
         _player.Attacked -= SetAxeAttack;
