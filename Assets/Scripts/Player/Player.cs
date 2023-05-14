@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private List<Weapon> _weapons;
 
-    private UnityAction _onAttack;
+    private UnityAction _onAttacked;
 
     private Weapon _currentWeapon;
     private float _health = 100.0f;
@@ -20,23 +20,28 @@ public class Player : MonoBehaviour
     private void Start()
     {
         _currentHealth = _health;
+        _currentWeapon = _weapons[0];
     }
 
     private void Update()
     {
+        TryAttack();
+    }
+
+    public event UnityAction Attacked
+    {
+        add => _onAttacked += value;
+        remove => _onAttacked -= value;
+    }
+
+    private void TryAttack()
+    {
         Hit = Input.GetAxis(Fire);
-    }
 
-    public event UnityAction Attack
-    {
-        add => _onAttack += value;
-        remove => _onAttack -= value;
-    }
-
-    private void TryInvokeAttack()
-    {
-
-        if (Input.GetMouseButtonDown(0))
-            _onAttack?.Invoke();
+        if (Hit != 0)
+        {
+            _currentWeapon.Attack();
+            _onAttacked.Invoke();
+        }
     }
 }

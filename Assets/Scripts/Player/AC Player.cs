@@ -16,7 +16,5 @@ public static class ACPlayer
     public static class Params
     {
         public const string Speed = nameof(Speed);
-        public const string AxeAttack = nameof(AxeAttack);
-
     }
 }

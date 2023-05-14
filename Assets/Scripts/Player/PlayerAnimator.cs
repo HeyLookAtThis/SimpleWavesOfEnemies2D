@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Movement))]
-[RequireComponent (typeof(Player))]
+[RequireComponent(typeof(Player))]
 
 public class PlayerAnimator : MonoBehaviour
 {
@@ -17,38 +17,31 @@ public class PlayerAnimator : MonoBehaviour
         _animator = GetComponent<Animator>();
         _movement = GetComponent<Movement>();
         _player = GetComponent<Player>();
+
+        _player.Attacked += SetAxeAttack;
     }
 
     private void Update()
     {
-        TryingPlayRun();
-        TryingPlayAttak();
+        SetSpeed();
     }
 
-    public void OnEnable()
+
+    private void OnDisable()
     {
+        _player.Attacked -= SetAxeAttack;
     }
 
-    public void OnDisable()
-    {
-    }
-
-    private void TryingPlayRun()
+    private void SetSpeed()
     {
         if (_movement.Grounded)
-            SetSpeedParameter(Mathf.Abs(_movement.Direction));
+            _animator.SetFloat(ACPlayer.Params.Speed, Mathf.Abs(_movement.Direction));
         else
-            SetSpeedParameter();
+            _animator.SetFloat(ACPlayer.Params.Speed, 0);
     }
 
-    private void SetSpeedParameter(float speed = 0)
+    private void SetAxeAttack()
     {
-        _animator.SetFloat(ACPlayer.Params.Speed, speed);
-    }
-
-    private void TryingPlayAttak()
-    {
-        if (_player.Hit != 0)
-            _animator.Play(ACPlayer.State.AxeAttack);
+        _animator.Play(ACPlayer.State.AxeAttack);
     }
 }
