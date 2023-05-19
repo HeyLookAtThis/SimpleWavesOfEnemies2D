@@ -12,6 +12,11 @@ public class PlayerRotation : MonoBehaviour
 
     private Quaternion _currentRotation;
 
+    private void Start()
+    {
+        _currentRotation = transform.rotation;
+    }
+
     private void FixedUpdate()
     {
         float direction = Input.GetAxis(Horizontal);
@@ -22,14 +27,8 @@ public class PlayerRotation : MonoBehaviour
             SetRotation(_rightAngle);
     }
 
-    public float GetDirection()
-    {
-        return _currentRotation.y;
-    }
-
     private void SetRotation(float angle)
     {
-        _currentRotation = transform.rotation;
         _currentRotation.y = angle;
         transform.rotation = _currentRotation;
     }    

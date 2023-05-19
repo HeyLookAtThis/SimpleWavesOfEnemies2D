@@ -2,55 +2,47 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CapsuleCollider2D))]
+[RequireComponent(typeof(Animator))]
 
 public class DestructionZone : MonoBehaviour
 {
-    [SerializeField] private int _damage;
+    [SerializeField] private float _damage;
 
-    private CapsuleCollider2D _collider;
     private Coroutine _liveCounter;
+    private Animator _animator;
 
-    private void Start()
+    private void Awake()
     {
-        _collider = GetComponent<CapsuleCollider2D>();
+        _animator = GetComponent<Animator>();
+    }
 
-        SetCollider();
-        BeginLiveCounter();
+    public void Run()
+    {
+        _animator.Play(ACDirectionZone.State.Hit);
+        BeginDestroyer();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent<Enemy>(out Enemy enemy))
-        {
             enemy.TakeDamage(_damage);
-            Destroy(gameObject);
-        }
     }
 
-    private void BeginLiveCounter()
+    private void BeginDestroyer()
     {
         if (_liveCounter != null)
-            StopCoroutine(_liveCounter);
+            StopCoroutine(Destroyer());
 
-        _liveCounter = StartCoroutine(LiveCounter());
+        _liveCounter = StartCoroutine(Destroyer());
     }
 
-    private void SetCollider()
+    private IEnumerator Destroyer()
     {
-        float xSize = 0.3f;
-        float ySize = 1.1f;
-
-        _collider.size.Set(xSize, ySize);
-    }
-
-    private IEnumerator LiveCounter()
-    {
-        float seconds = 0.5f;
+        float seconds = 1f;
         var waitTime = new WaitForSeconds(seconds);
         bool isWorked = false;
 
-        while (isWorked == false)
+        while(isWorked == false)
         {
             isWorked = true;
             yield return waitTime;

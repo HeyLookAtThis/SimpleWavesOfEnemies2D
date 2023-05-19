@@ -18,7 +18,7 @@ public class PlayerAnimator : MonoBehaviour
         _movement = GetComponent<Movement>();
         _player = GetComponent<Player>();
 
-        _player.Attacked += SetAxeAttack;
+        _player.Attacked += PlayAxeAttack;
     }
 
     private void Update()
@@ -28,7 +28,7 @@ public class PlayerAnimator : MonoBehaviour
 
     private void OnDisable()
     {
-        _player.Attacked -= SetAxeAttack;
+        _player.Attacked -= PlayAxeAttack;
     }
 
     private void SetSpeed()
@@ -39,7 +39,7 @@ public class PlayerAnimator : MonoBehaviour
             _animator.SetFloat(ACPlayer.Params.Speed, 0);
     }
 
-    private void SetAxeAttack()
+    private void PlayAxeAttack()
     {
         _animator.Play(ACPlayer.State.AxeAttack);
     }

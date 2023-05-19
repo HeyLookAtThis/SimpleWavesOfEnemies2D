@@ -5,12 +5,15 @@ using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private int _health;
+    [SerializeField] private float _health;
+    [SerializeField] private Player _target;
 
     private UnityAction _onTakenDamage;
     private UnityAction _onDied;
 
     private Coroutine _destroyer;
+
+    public Player Target => _target;
 
     public event UnityAction TakenDamage
     {
@@ -24,7 +27,7 @@ public class Enemy : MonoBehaviour
         remove => _onDied -= value;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         _health -= damage;
         _onTakenDamage.Invoke();

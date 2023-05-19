@@ -13,8 +13,6 @@ public class Player : MonoBehaviour
     private float _health = 100.0f;
     private float _currentHealth;
 
-    public bool IsHit { get; private set; }
-
     private void Start()
     {
         _currentHealth = _health;
@@ -41,7 +39,7 @@ public class Player : MonoBehaviour
     {
         if (GetHit())
         {
-            _currentWeapon.Attack(transform.position, transform.rotation.y);
+            _currentWeapon.Attack(transform);
             _onAttacked.Invoke();
         }
     }

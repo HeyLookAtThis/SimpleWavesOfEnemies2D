@@ -19,11 +19,7 @@ public class MinotaurAnimator : MonoBehaviour
         _enemy.Died += PlayDying;
     }
 
-    private void OnEnable()
-    {
-    }
-
-    private void OnDisable()
+    private void OnDestroy()
     {
         _enemy.TakenDamage -= PlayTakingDamage;
         _enemy.Died -= PlayDying;

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -9,24 +10,23 @@ public class Axe : Weapon
 
     private DestructionZone _currentDestruction = null;
 
-    public override void Attack(Vector2 position, float rotationY)
+    public override void Attack(Transform transform)
     {
         if(_currentDestruction == null)
-            InstantiateDestruction(position, rotationY);
+            InstantiateDestruction(transform);
+
+        _currentDestruction.Run();
     }
 
-    private void InstantiateDestruction(Vector2 position, float rorationY)
+    private void InstantiateDestruction(Transform transform)
     {
-        float xAxeOffset;
+        _currentDestruction = Instantiate(_destruction, GetStartingPosition(transform.position), Quaternion.identity, transform);
+    }
 
-        if (rorationY == 0)
-            xAxeOffset = -0.9f;
-        else
-            xAxeOffset = 0.9f;
+    private Vector2 GetStartingPosition(Vector2 position)
+    {
+        float yPosition = 1.6f;
 
-        float yAxeOffset = 0.5f;
-        Vector2 correctPosition = new Vector2(position.x + xAxeOffset, position.y + yAxeOffset);
-
-        _currentDestruction = Instantiate(_destruction, correctPosition, Quaternion.identity);
+        return new Vector2(position.x, position.y + yPosition);
     }
 }
