@@ -3,66 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Character
 {
-    [SerializeField] private float _health;
-    [SerializeField] private Player _target;
+    [SerializeField] private int _reward;
 
-    private UnityAction _onTakenDamage;
-    private UnityAction _onDied;
-
-    private Coroutine _destroyer;
+    private Player _target;
+    private UnityAction<Enemy> _onDying;
 
     public Player Target => _target;
 
-    public event UnityAction TakenDamage
+    public int Reward => _reward;
+
+    private Weapon _currentWeapon => GetRandomWeapon();
+
+    public event UnityAction<Enemy> Dying
     {
-        add => _onTakenDamage += value;
-        remove => _onTakenDamage -= value;
+        add => _onDying += value;
+        remove => _onDying -= value;
     }
 
-    public event UnityAction Died
+    public void InitializeTarget(Player target)
     {
-        add => _onDied += value;
-        remove => _onDied -= value;
+        _target = target;
     }
 
-    public void TakeDamage(float damage)
+    public void Attack()
     {
-        _health -= damage;
-        _onTakenDamage.Invoke();
-
-        if (_health <= 0)
-        {
-            _onDied.Invoke();
-            BeginDestroy();
-        }
+        _currentWeapon.Attack(transform);
+        onAttacked.Invoke();
     }
 
-    private void BeginDestroy()
+    private Weapon GetRandomWeapon()
     {
-        if (_destroyer != null)
-            StopCoroutine(_destroyer);
-
-        _destroyer = StartCoroutine(Destroyer());
-    }
-
-    private IEnumerator Destroyer()
-    {
-        float second = 1.0f;
-        var waitTime = new WaitForSeconds(second);
-        bool isSkeppedTime = false;
-
-        while (isSkeppedTime == false)
-        {
-            isSkeppedTime = true;
-            yield return waitTime;
-        }
-
-        if(isSkeppedTime)
-        {
-            Destroy(gameObject);
-            yield break;
-        }
+        return _weapons[Random.Range(0, _weapons.Count)];
     }
 }

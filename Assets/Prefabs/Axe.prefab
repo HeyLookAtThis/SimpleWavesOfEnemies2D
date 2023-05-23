@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2735720082187625927}
   - component: {fileID: 332828814396033800}
-  - component: {fileID: 7190107782647085031}
   - component: {fileID: 5656436611291299567}
   m_Layer: 0
   m_Name: Axe
@@ -84,22 +83,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &7190107782647085031
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8713755270047037921}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.75, y: 0.75}
-  m_Direction: 0
 --- !u!114 &5656436611291299567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,5 +99,4 @@ MonoBehaviour:
   _price: 0
   _icon: {fileID: 21300000, guid: 758bf352434970a4db91f175746962fa, type: 3}
   _isBuy: 1
-  _destruction: {fileID: 6266090834263547854, guid: 8318814a656ef2947abccc17808244ee, type: 3}
-  _player: {fileID: 5436742856728752426, guid: b395acb59417bfa4c9b2020d8fff05b4, type: 3}
+  _attack: {fileID: -2753824119895332759, guid: 8318814a656ef2947abccc17808244ee, type: 3}

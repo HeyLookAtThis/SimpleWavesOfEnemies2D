@@ -19,6 +19,8 @@ public class PlayerAnimator : MonoBehaviour
         _player = GetComponent<Player>();
 
         _player.Attacked += PlayAxeAttack;
+        _player.TakenDamage += PlayTakeDamage;
+        _player.Died += PlayDeath;
     }
 
     private void Update()
@@ -29,6 +31,8 @@ public class PlayerAnimator : MonoBehaviour
     private void OnDisable()
     {
         _player.Attacked -= PlayAxeAttack;
+        _player.TakenDamage -= PlayTakeDamage;
+        _player.Died -= PlayDeath;
     }
 
     private void SetSpeed()
@@ -41,6 +45,21 @@ public class PlayerAnimator : MonoBehaviour
 
     private void PlayAxeAttack()
     {
-        _animator.Play(ACPlayer.State.AxeAttack);
+        _animator.SetTrigger(ACPlayer.Params.Attack);
+    }
+
+    private void PlayTakeDamage()
+    {
+        _animator.Play(ACPlayer.State.TakeDamage);
+    }
+
+    private void PlayDeath()
+    {
+        _animator.Play(ACPlayer.State.DeathWithAxe);
+    }
+
+    private void PlayAnimation(string animation)
+    {
+        _animator.Play(animation);
     }
 }

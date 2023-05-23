@@ -3,31 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Player : MonoBehaviour
+public class Player : Character
 {
-    [SerializeField] private List<Weapon> _weapons;
-
-    private UnityAction _onAttacked;
-
     private Weapon _currentWeapon;
-    private float _health = 100.0f;
-    private float _currentHealth;
+
+    public int Money { get; private set; }
+
+    public Transform CharacterTransform { get; private set; }
 
     private void Start()
     {
-        _currentHealth = _health;
         _currentWeapon = _weapons[0];
     }
 
     private void Update()
     {
+        CharacterTransform = transform;
         TryAttack();
     }
 
-    public event UnityAction Attacked
+    public void AddMoney(int money)
     {
-        add => _onAttacked += value;
-        remove => _onAttacked -= value;
+        Money += money;
     }
 
     private bool GetHit()
@@ -40,7 +37,7 @@ public class Player : MonoBehaviour
         if (GetHit())
         {
             _currentWeapon.Attack(transform);
-            _onAttacked.Invoke();
+            onAttacked.Invoke();
         }
     }
 }

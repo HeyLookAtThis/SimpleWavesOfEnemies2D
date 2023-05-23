@@ -6,21 +6,16 @@ using UnityEngine.UIElements;
 
 public class Axe : Weapon
 {
-    [SerializeField] private DestructionZone _destruction;
+    [SerializeField] private PlayerAxBlow _attack;
 
-    private DestructionZone _currentDestruction = null;
+    private PlayerAxBlow _currentDestruction = null;
 
     public override void Attack(Transform transform)
     {
-        if(_currentDestruction == null)
-            InstantiateDestruction(transform);
+        if (_currentDestruction == null)
+            _currentDestruction = Instantiate(_attack, GetStartingPosition(transform.position), Quaternion.identity, transform);
 
         _currentDestruction.Run();
-    }
-
-    private void InstantiateDestruction(Transform transform)
-    {
-        _currentDestruction = Instantiate(_destruction, GetStartingPosition(transform.position), Quaternion.identity, transform);
     }
 
     private Vector2 GetStartingPosition(Vector2 position)

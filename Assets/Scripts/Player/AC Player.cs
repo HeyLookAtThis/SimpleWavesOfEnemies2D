@@ -11,10 +11,13 @@ public static class ACPlayer
         public const string WhaitingForEnemies = nameof(WhaitingForEnemies);
         public const string AxeAttack = nameof(AxeAttack);
         public const string RunWhithAxeWithoutEnemy = nameof(RunWhithAxeWithoutEnemy);
+        public const string TakeDamage = nameof(TakeDamage);
+        public const string DeathWithAxe = nameof(DeathWithAxe);
     }
 
     public static class Params
     {
         public const string Speed = nameof(Speed);
+        public const string Attack = nameof(Attack);
     }
 }

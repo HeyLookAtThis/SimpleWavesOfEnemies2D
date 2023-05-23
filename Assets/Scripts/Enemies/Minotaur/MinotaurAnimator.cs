@@ -10,13 +10,21 @@ public class MinotaurAnimator : MonoBehaviour
     private Enemy _enemy;
     private Animator _animator;
 
-    private void Start()
+    private void Awake()
     {
         _enemy = GetComponent<Enemy>();
         _animator = GetComponent<Animator>();
+    }
 
+    private void Start()
+    {
         _enemy.TakenDamage += PlayTakingDamage;
         _enemy.Died += PlayDying;
+    }
+
+    public void PlayCelebrate()
+    {
+        _animator.Play(ACMinotaur.State.MinotaurCelebrate);
     }
 
     private void OnDestroy()

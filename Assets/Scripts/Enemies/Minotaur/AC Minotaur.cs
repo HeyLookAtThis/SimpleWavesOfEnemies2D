@@ -13,6 +13,7 @@ public class ACMinotaur
         public const string MinotaurSuperAttak = nameof(MinotaurSuperAttak);
         public const string MinotaurDied = nameof(MinotaurDied);
         public const string MinotaurTakeDamage = nameof(MinotaurTakeDamage);
+        public const string MinotaurCelebrate = nameof(MinotaurCelebrate);
     }
 
     public static class Params

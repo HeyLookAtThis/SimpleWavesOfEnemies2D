@@ -11,10 +11,12 @@ public class ACBandit
         public const string BanditTakeDamage = nameof(BanditTakeDamage);
         public const string BanditIdle = nameof(BanditIdle);
         public const string BanditRun = nameof(BanditRun);
+        public const string BanditCelebrations = nameof(BanditCelebrations);
     }
 
     public static class Params
     {
-
+        public const string Speed = nameof(Speed);
+        public const string Attack = nameof(Attack);
     }
 }

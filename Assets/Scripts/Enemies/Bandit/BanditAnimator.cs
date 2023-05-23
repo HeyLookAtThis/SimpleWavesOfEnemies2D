@@ -12,21 +12,33 @@ public class BanditAnimator : MonoBehaviour
 
     private void Awake()
     {
-        _enemy.TakenDamage += PlayTakingDamage;
-        _enemy.Died += PlayDying;
-    }
-
-    private void Start()
-    {
         _enemy = GetComponent<Enemy>();
         _animator = GetComponent<Animator>();
     }
 
-    //private void OnDestroy()
-    //{
-    //    _enemy.TakenDamage -= PlayTakingDamage;
-    //    _enemy.Died -= PlayDying;
-    //}
+    private void Start()
+    {
+        _enemy.Attacked += PlayAttack;
+        _enemy.TakenDamage += PlayTakingDamage;
+        _enemy.Died += PlayDying;
+    }
+
+    private void OnDestroy()
+    {
+        _enemy.Attacked -= PlayAttack;
+        _enemy.TakenDamage -= PlayTakingDamage;
+        _enemy.Died -= PlayDying;
+    }
+
+    public void SetSpeed(float speed)
+    {
+        _animator.SetFloat(ACBandit.Params.Speed, speed);
+    }
+
+    public void PlayCelebrate()
+    {
+        _animator.Play(ACBandit.State.BanditCelebrations);
+    }
 
     private void PlayTakingDamage()
     {
@@ -36,5 +48,10 @@ public class BanditAnimator : MonoBehaviour
     private void PlayDying()
     {
         _animator.Play(ACBandit.State.BanditDie);
+    }
+
+    private void PlayAttack()
+    {
+        _animator.SetTrigger(ACBandit.Params.Attack);
     }
 }
